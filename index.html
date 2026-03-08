@@ -518,6 +518,67 @@
     fill: currentColor;
     flex-shrink: 0;
   }
+
+  .badge-paid {
+    background: rgba(255,180,50,0.12);
+    border: 1px solid rgba(255,180,50,0.4);
+    color: #ffb432;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .plugin-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .plugin-card.featured {
+      grid-column: span 2;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .plugin-card.featured .card-icon {
+      font-size: 36px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    nav {
+      padding: 0 20px;
+    }
+    .nav-links {
+      gap: 16px;
+    }
+    .nav-links a:not(.nav-gh) {
+      display: none;
+    }
+    .hero {
+      padding: 60px 20px 50px;
+    }
+    .section {
+      padding: 0 20px 60px;
+    }
+    .plugin-grid {
+      grid-template-columns: 1fr;
+    }
+    .plugin-card.featured {
+      grid-column: span 1;
+    }
+    .about-strip {
+      flex-direction: column;
+      padding: 24px 20px;
+      gap: 24px;
+    }
+    .about-stats {
+      gap: 24px;
+      width: 100%;
+      justify-content: space-around;
+    }
+    footer {
+      padding: 20px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -561,7 +622,10 @@
       <div class="card-body">
         <div class="card-header">
           <div class="card-name">SwagFishing</div>
-          <span class="card-badge badge-flagship">Flagship</span>
+          <div style="display:flex;gap:6px;flex-shrink:0;">
+            <span class="card-badge badge-paid">Paid</span>
+            <span class="card-badge badge-flagship">Flagship</span>
+          </div>
         </div>
         <p class="card-desc">
           The most feature-rich fishing plugin for Paper servers. <strong>100+ custom fish</strong> across 5 rarity tiers, a collector's Fish Codex, deep skill tree progression, consumable baits, totems, tournaments, delivery quests, and a <strong>built-in web editor</strong>, all without touching YAML or restarting your server.
