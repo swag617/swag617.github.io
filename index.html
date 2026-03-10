@@ -524,6 +524,25 @@
     border: 1px solid rgba(255,180,50,0.4);
     color: #ffb432;
   }
+  .badge-coming-soon {
+    background: rgba(255,100,100,0.08);
+    border: 1px solid rgba(255,100,100,0.25);
+    color: #ff8080;
+  }
+
+  /* coming-soon card dimming */
+  .plugin-card.coming-soon {
+    opacity: 0.7;
+    border-color: var(--border-dim);
+  }
+  .plugin-card.coming-soon::before {
+    opacity: 0.3;
+  }
+  .plugin-card.coming-soon:hover {
+    opacity: 0.9;
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
+  }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
@@ -777,6 +796,48 @@
       </div>
     </div>
 
+    <!-- SwagBounties -->
+    <div class="plugin-card coming-soon">
+      <span class="card-icon">🎯</span>
+      <div class="card-body">
+        <div class="card-header">
+          <div class="card-name">SwagBounties</div>
+          <span class="card-badge badge-coming-soon">Coming Soon</span>
+        </div>
+        <p class="card-desc">A <strong>bounty system</strong> built for SMP, Lifesteal, and everything in between. Place bounties on players, hunt them down, and claim your reward - fully configurable to match any server's economy and ruleset.</p>
+        <div class="card-features">
+          <span class="feature-chip">Player Bounties</span>
+          <span class="feature-chip">SMP &amp; Lifesteal</span>
+          <span class="feature-chip">Economy</span>
+          <span class="feature-chip">Configurable</span>
+        </div>
+        <div class="card-actions">
+          <a class="btn btn-disabled">In Development</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SwagMenus -->
+    <div class="plugin-card coming-soon">
+      <span class="card-icon">🗂️</span>
+      <div class="card-body">
+        <div class="card-header">
+          <div class="card-name">SwagMenus</div>
+          <span class="card-badge badge-coming-soon">Coming Soon</span>
+        </div>
+        <p class="card-desc">Create your own <strong>custom GUIs</strong> with ease. SwagMenus makes inventory menu creation extremely simple - no complex setup required, just define your layout and actions and you're good to go.</p>
+        <div class="card-features">
+          <span class="feature-chip">Custom GUIs</span>
+          <span class="feature-chip">Easy Config</span>
+          <span class="feature-chip">YAML Driven</span>
+          <span class="feature-chip">Actions</span>
+        </div>
+        <div class="card-actions">
+          <a class="btn btn-disabled">In Development</a>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -789,7 +850,7 @@
     </div>
     <div class="about-stats">
       <div class="stat">
-        <div class="stat-num">6+</div>
+        <div class="stat-num">8+</div>
         <div class="stat-lbl">Plugins</div>
       </div>
       <div class="stat">
