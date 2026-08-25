@@ -205,7 +205,7 @@
   <div class="hero">
     <div class="hero-eyebrow">Infrastructure &middot; Standalone Java App</div>
     <h1 class="hero-title">One proxy. <span class="accent">Self-updating, self-healing.</span></h1>
-    <p class="hero-sub">SwagProxy boots <strong>Velocity</strong> with <strong>Geyser</strong> and <strong>Floodgate</strong> baked in, then supervises that process for its entire life — auto-updating components with atomic staging and crash-window rollback, recovering from bad builds automatically, and running your restart schedule across timezones correctly. Point Java and Bedrock players at one address and never touch it again.</p>
+    <p class="hero-sub">SwagProxy boots <strong>Velocity</strong> with <strong>Geyser</strong> and <strong>Floodgate</strong> baked in, then supervises that process for its entire life: auto-updating components with atomic staging and crash-window rollback, recovering from bad builds automatically, and running your restart schedule across timezones correctly. Point Java and Bedrock players at one address and never touch it again.</p>
     <div class="hero-tags">
       <span class="tag">Java + Bedrock, one port each</span>
       <span class="tag">Velocity &middot; Geyser &middot; Floodgate</span>
@@ -253,17 +253,17 @@
       <div class="panel feature">
         <div class="feature-num">01</div>
         <h3>Atomic staged updates, verified rollback</h3>
-        <p>New builds are downloaded, SHA256-verified, and staged as <code>.jar.staged</code> — the live jar is never touched outside an actual restart. If Velocity crashes within the rollback window after an update, every swapped jar is automatically restored from backup and the bad build is marked "skipped" forever.</p>
+        <p>New builds are downloaded, SHA256-verified, and staged as <code>.jar.staged</code>. The live jar is never touched outside an actual restart. If Velocity crashes within the rollback window after an update, every swapped jar is automatically restored from backup and the bad build is marked "skipped" forever.</p>
       </div>
       <div class="panel feature">
         <div class="feature-num">02</div>
         <h3>Fresh-install candidate probing</h3>
-        <p>On a brand-new install there's no known-good baseline to roll back to. If boot fails, SwagProxy automatically walks up to 5 alternate Velocity builds, then alternate Geyser builds, until something survives — with a full diagnostic if every combination fails.</p>
+        <p>On a brand-new install there's no known-good baseline to roll back to. If boot fails, SwagProxy automatically walks up to 5 alternate Velocity builds, then alternate Geyser builds, until something survives, with a full diagnostic if every combination fails.</p>
       </div>
       <div class="panel feature">
         <div class="feature-num">03</div>
         <h3>Timezone-aware restart scheduling</h3>
-        <p>Every <code>restart-schedule</code> entry carries its own <code>java.time.ZoneId</code> — a proxy hosted on a UTC server can restart at 4:30 AM <em>Eastern</em> every day, correctly following DST, without SwagProxy ever assuming the host machine's local time.</p>
+        <p>Every <code>restart-schedule</code> entry carries its own <code>java.time.ZoneId</code>. A proxy hosted on a UTC server can restart at 4:30 AM <em>Eastern</em> every day, correctly following DST, without SwagProxy ever assuming the host machine's local time.</p>
       </div>
       <div class="panel feature">
         <div class="feature-num">04</div>
@@ -274,7 +274,7 @@
   </div>
 
   <div class="panel quickstart">
-    <div class="quickstart-label">Quick start — one command, on an empty folder</div>
+    <div class="quickstart-label">Quick start: one command, on an empty folder</div>
     <pre><span class="c">mkdir</span> my-proxy <span class="c">&amp;&amp;</span> <span class="c">cd</span> my-proxy
 <span class="p">java</span> -jar SwagProxy.jar</pre>
   </div>
