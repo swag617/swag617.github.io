@@ -228,6 +228,28 @@
     background: rgba(255,255,255,0.02);
   }
 
+  /* ── SwagProxy spotlight — infrastructure, not a plugin, gets its own page ── */
+  .proxy-spotlight {
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    padding: 22px 28px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .proxy-spotlight:hover { transform: translateY(-1px); }
+  .proxy-spotlight:hover .proxy-spotlight-cta { color: #fff; }
+  .proxy-spotlight-eyebrow {
+    font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 6px;
+  }
+  .proxy-spotlight-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .proxy-spotlight-desc { font-size: 13px; line-height: 1.6; color: var(--text-dim); max-width: 560px; }
+  .proxy-spotlight-cta {
+    font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: #c0b3d8;
+    white-space: nowrap; flex-shrink: 0; transition: color 0.15s;
+  }
+  @media (max-width: 700px) {
+    .proxy-spotlight { flex-direction: column; align-items: flex-start; }
+  }
+
   /* ── SECTION ── */
   .section { max-width: 1120px; margin: 0 auto; padding: 0 40px 80px; }
   .section-label { display: flex; align-items: center; gap: 14px; margin-bottom: 26px; }
@@ -499,6 +521,17 @@
     <span class="hero-tag">Spigot</span>
     <span class="hero-tag">1.21+</span>
   </div>
+</div>
+
+<div class="section" style="padding-bottom: 0;">
+  <a href="swagproxy.html" class="bevel-in proxy-spotlight">
+    <div class="proxy-spotlight-body">
+      <div class="proxy-spotlight-eyebrow">Infrastructure &middot; Standalone Java App</div>
+      <div class="proxy-spotlight-title">SwagProxy</div>
+      <p class="proxy-spotlight-desc">A self-updating, self-healing dual-protocol proxy launcher — boots Velocity with Geyser and Floodgate, then supervises it for life with atomic staged updates and automatic crash-window rollback.</p>
+    </div>
+    <div class="proxy-spotlight-cta">See the architecture &rarr;</div>
+  </a>
 </div>
 
 <div class="section" id="plugins">
