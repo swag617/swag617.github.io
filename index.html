@@ -544,7 +544,7 @@
   <a href="https://discord.gg/9rKuThh6yU" target="_blank" rel="noopener" class="motd-card bevel-in" id="discordCard" aria-label="Join swag617's Plugin Server on Discord">
     <div class="motd-icon" id="discordIcon">S</div>
     <div class="motd-body">
-      <div class="motd-line1"><span class="amp">&gt;</span> swag617's Plugin Server</div>
+      <div class="motd-line1"><span class="amp">&gt;</span> <span id="discordName">swag617's Plugin Server</span></div>
       <div class="motd-line2">Minecraft plugin developer · Paper &amp; Spigot</div>
     </div>
     <div class="motd-stats">
@@ -821,6 +821,10 @@ fetch('https://discord.com/api/v10/invites/9rKuThh6yU?with_counts=true', { cache
   .then(r => r.ok ? r.json() : Promise.reject(r.status))
   .then(data => {
     const guild = data.guild || {};
+    if (guild.name) {
+      document.getElementById('discordName').textContent = guild.name;
+      document.getElementById('discordCard').setAttribute('aria-label', `Join ${guild.name} on Discord`);
+    }
     if (guild.icon && guild.id) {
       const iconEl = document.getElementById('discordIcon');
       const img = new Image();
