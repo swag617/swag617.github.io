@@ -273,6 +273,7 @@
   }
   .proxy-spotlight:hover { transform: translateY(-1px); }
   .proxy-spotlight:hover .proxy-spotlight-cta { color: #fff; }
+  .proxy-spotlight + .proxy-spotlight { margin-top: 14px; }
   .proxy-spotlight-eyebrow {
     font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
     text-transform: uppercase; color: var(--blue); margin-bottom: 6px;
@@ -571,6 +572,15 @@
       <p class="proxy-spotlight-desc">A self-updating, self-healing dual-protocol proxy launcher. It boots Velocity with Geyser and Floodgate, then supervises the process for life, handling atomic staged updates and automatic crash-window rollback.</p>
     </div>
     <div class="proxy-spotlight-cta">See the architecture &rarr;</div>
+  </a>
+
+  <a href="spaper.html" class="bevel-in proxy-spotlight">
+    <div class="proxy-spotlight-body">
+      <div class="proxy-spotlight-eyebrow">Server Software &middot; Paper Fork</div>
+      <div class="proxy-spotlight-title">SPaper</div>
+      <p class="proxy-spotlight-desc">A private Paper fork scaffolded from Purpur's build tooling and stripped back to a blank slate: byte-for-byte equivalent to vanilla Paper today, and the foundation for hand-porting select Gale and Pufferfish performance patches next.</p>
+    </div>
+    <div class="proxy-spotlight-cta">See the roadmap &rarr;</div>
   </a>
 </div>
 

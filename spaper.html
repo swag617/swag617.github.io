@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPaper · swag617</title>
+<meta name="description" content="SPaper is a private Paper fork scaffolded from Purpur's build tooling and stripped to a blank slate — byte-for-byte equivalent to vanilla Paper today, and the foundation for hand-porting select Gale and Pufferfish performance patches next.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:          #1a1a1a;
+    --slot:        #1e1e1e;
+    --line:        #2a2a2a;
+    --purple:      #764ba2;
+    --blue:        #667eea;
+    --grad:        linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --text:        #e0e0e0;
+    --text-dim:    #999;
+    --lore:        #9b8ec4;
+    --font-flare:  'Silkscreen', 'JetBrains Mono', monospace;
+    --font:        'Inter', sans-serif;
+    --mono:        'JetBrains Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(102,126,234,0.05), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 10%, rgba(118,75,162,0.05), transparent 60%);
+    background-attachment: fixed;
+  }
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+  .panel {
+    position: relative;
+    background: var(--slot);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .panel::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--grad);
+    opacity: 0.7;
+  }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(19,19,19,0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--line);
+    padding: 0 40px;
+    height: 58px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-back {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--mono);
+    font-size: 12px; font-weight: 600;
+    color: var(--text-dim);
+    transition: color 0.15s;
+  }
+  .nav-back:hover { color: var(--text); }
+  .nav-logo {
+    font-family: var(--font-flare);
+    font-size: 13px; font-weight: 700;
+    background: var(--grad);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    letter-spacing: 1px;
+  }
+  .nav-gh {
+    display: flex; align-items: center; gap: 7px;
+    padding: 6px 14px;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    font-size: 12px; font-weight: 600;
+    color: var(--purple-light, #c0b3d8) !important;
+    background: rgba(118,75,162,0.07);
+    transition: all 0.18s;
+  }
+  .nav-gh:hover { border-color: var(--purple); background: rgba(118,75,162,0.14); color: #fff !important; }
+
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 0 40px; }
+
+  .hero { padding: 80px 0 40px; }
+  .hero-eyebrow {
+    font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 16px;
+  }
+  .hero-title {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800; letter-spacing: -1px; line-height: 1.1;
+    color: #fff; max-width: 720px;
+  }
+  .hero-title .accent {
+    background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero-sub {
+    font-size: 16.5px; line-height: 1.7; color: var(--text-dim);
+    max-width: 640px; margin-top: 20px;
+  }
+  .hero-sub strong { color: var(--text); font-weight: 600; }
+  .hero-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 22px; }
+  .tag {
+    font-family: var(--mono); font-size: 11px; font-weight: 600;
+    padding: 4px 12px; border-radius: 20px; border: 1px solid var(--line);
+    color: var(--text-dim); background: rgba(255,255,255,0.02);
+  }
+  .hero-actions { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+  .btn {
+    position: relative; overflow: hidden;
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 11px 20px; border-radius: 8px;
+    font-size: 13.5px; font-weight: 600;
+    border: 1px solid; transition: all 0.15s; cursor: pointer;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, rgba(102,126,234,0.15), rgba(118,75,162,0.15));
+    border-color: rgba(118,75,162,0.4);
+    color: #c0b3d8;
+  }
+  .btn-primary:hover { background: linear-gradient(135deg, rgba(102,126,234,0.25), rgba(118,75,162,0.25)); border-color: var(--purple); color: #fff; }
+  .btn-ghost { background: transparent; border-color: var(--line); color: var(--text-dim); }
+  .btn-ghost:hover { border-color: #555; color: var(--text); }
+  .icon { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
+  .btn-ripple { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.35); transform: scale(0); animation: btnRipple 0.55s ease-out forwards; pointer-events: none; }
+  @keyframes btnRipple { to { transform: scale(1); opacity: 0; } }
+
+  .diagram-panel { padding: 28px; margin-top: 56px; }
+  .diagram-panel svg { width: 100%; height: auto; display: block; border-radius: 6px; }
+  .diagram-caption { font-family: var(--mono); font-size: 11px; color: var(--text-dim); text-align: center; margin-top: 14px; }
+
+  .section { padding: 64px 0; }
+  .section-label { display: flex; align-items: center; gap: 14px; margin-bottom: 30px; }
+  .section-label span { font-family: var(--font-flare); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); white-space: nowrap; }
+  .section-label::after { content: ''; flex: 1; height: 2px; background: var(--line); }
+
+  .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px; }
+  .feature { padding: 24px; }
+  .feature-num { font-family: var(--mono); font-size: 11px; color: var(--lore); font-style: italic; margin-bottom: 10px; }
+  .feature h3 { font-size: 15.5px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .feature p { font-size: 13px; line-height: 1.65; color: var(--text-dim); }
+  .feature code { font-family: var(--mono); font-size: 12px; color: var(--blue); background: rgba(102,126,234,0.1); padding: 1px 5px; border-radius: 3px; }
+
+  .quickstart { padding: 30px; }
+  .quickstart-label { font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin-bottom: 14px; }
+  .quickstart pre {
+    font-family: var(--mono); font-size: 13px; line-height: 1.8; color: #a8d8ff;
+    background: #0d0d0d; border: 1px solid var(--line); border-radius: 8px;
+    padding: 18px 20px; overflow-x: auto;
+  }
+  .quickstart pre .c { color: var(--text-dim); }
+  .quickstart pre .p { color: var(--lore); }
+  .quickstart-note { font-size: 12.5px; line-height: 1.6; color: var(--text-dim); margin-top: 14px; }
+  .quickstart-note strong { color: var(--text); font-weight: 600; }
+
+  .roadmap { display: flex; flex-direction: column; gap: 2px; }
+  .roadmap-item { padding: 20px 24px; display: flex; align-items: flex-start; gap: 16px; }
+  .roadmap-check {
+    flex-shrink: 0; width: 22px; height: 22px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; margin-top: 1px;
+  }
+  .roadmap-item.done .roadmap-check { background: rgba(46,196,182,0.15); color: #2ec4b6; border: 1px solid rgba(46,196,182,0.4); }
+  .roadmap-item.planned .roadmap-check { background: transparent; color: var(--text-dim); border: 1px dashed var(--line); }
+  .roadmap-body h3 { font-size: 14.5px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .roadmap-item.planned h3 { color: var(--text-dim); }
+  .roadmap-body p { font-size: 13px; line-height: 1.6; color: var(--text-dim); }
+
+  footer {
+    border-top: 2px solid var(--line);
+    padding: 26px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1000px; margin: 0 auto; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-left { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+  .footer-left span { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 600; }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { font-size: 12px; color: var(--text-dim); font-family: var(--mono); transition: color 0.15s; }
+  .footer-links a:hover { color: #c0b3d8; }
+
+  #page-transition {
+    position: fixed; inset: 0;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #667eea, #764ba2);
+    background-size: 300% 300%;
+    z-index: 9999; opacity: 0; pointer-events: none;
+  }
+  @keyframes transitionFlash { 0% { opacity: 0; transform: scale(0.95); } 40% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.08); } }
+  #page-transition.active { animation: transitionFlash 0.55s ease forwards; }
+
+  @media (max-width: 760px) {
+    .wrap, nav, footer { padding-left: 20px; padding-right: 20px; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .hero { padding: 56px 0 30px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-back">&larr; swag617</a>
+  <a href="https://github.com/swag617/SPaper" target="_blank" class="nav-gh">
+    <svg class="icon" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+    GitHub
+  </a>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-eyebrow">Server Software &middot; Paper Fork</div>
+    <h1 class="hero-title">A blank slate, <span class="accent">built for the patches that matter.</span></h1>
+    <p class="hero-sub">SPaper is a private fork of <strong>Paper</strong>, scaffolded from <strong>PurpurMC/Purpur</strong>'s build tooling and stripped back to nothing. It introduces <strong>no gameplay changes of its own</strong> — right now it's byte-for-byte equivalent to vanilla Paper, rebranded and confirmed to build. That's deliberate: it exists as a clean foundation for hand-porting specific performance patches from projects like <strong>Gale</strong> and <strong>Pufferfish</strong>, one at a time, instead of inheriting a fork's entire accumulated patch history sight unseen.</p>
+    <div class="hero-tags">
+      <span class="tag">Paper Fork</span>
+      <span class="tag">PurpurMC Build Tooling</span>
+      <span class="tag">paperweight-patcher</span>
+      <span class="tag">Java 21+ &middot; JDK 25 toolchain</span>
+    </div>
+    <div class="hero-actions">
+      <a href="https://github.com/swag617/SPaper" target="_blank" class="btn btn-primary">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        Source on GitHub
+      </a>
+      <a href="#roadmap" class="btn btn-ghost">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        View Roadmap
+      </a>
+    </div>
+  </div>
+
+  <div class="panel diagram-panel">
+    <svg viewBox="0 0 680 390" role="img" xmlns="http://www.w3.org/2000/svg">
+      <title>SPaper fork lineage</title>
+      <desc>SPaper forks PaperMC/Paper and reuses PurpurMC/Purpur's build tooling only, with none of Purpur's gameplay patches. The resulting patch stack currently sits at Milestone 1 (an empty, buildable fork) with Milestone 2+ planned to hand-port select Gale and Pufferfish patches. It publishes local Maven artifacts and a separate runnable server jar.</desc>
+      <defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#8a8f98" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+      <style>text{font-family:'Segoe UI',Arial,sans-serif;}.th{font-size:15px;font-weight:600;}.ts{font-size:12px;opacity:0.75;}</style></defs>
+      <rect x="0" y="0" width="680" height="390" fill="#12151c"/>
+
+      <g><rect x="30" y="55" width="150" height="66" rx="8" fill="#123c3a" stroke="#2ec4b6" stroke-width="1"/><text class="th" x="105" y="80" text-anchor="middle" dominant-baseline="central" fill="#9ef0e8">PaperMC/Paper</text><text class="ts" x="105" y="100" text-anchor="middle" dominant-baseline="central" fill="#9ef0e8">Upstream source, MIT</text></g>
+      <g><rect x="30" y="165" width="150" height="66" rx="8" fill="#42201d" stroke="#ff6f61" stroke-width="1"/><text class="th" x="105" y="190" text-anchor="middle" dominant-baseline="central" fill="#ffc0b8">PurpurMC/Purpur</text><text class="ts" x="105" y="210" text-anchor="middle" dominant-baseline="central" fill="#ffc0b8">Build tooling only</text></g>
+
+      <g><rect x="220" y="30" width="240" height="300" rx="20" fill="#1b1f28" stroke="#8a8f98" stroke-width="1"/><text class="th" x="340" y="56" text-anchor="middle" dominant-baseline="central" fill="#e6e8ec">SPaper</text><text class="ts" x="340" y="76" text-anchor="middle" dominant-baseline="central" fill="#b7bcc5">paperweight-patcher stack</text></g>
+      <g><rect x="240" y="100" width="200" height="60" rx="10" fill="#1e3a2f" stroke="#2ec4b6" stroke-width="1"/><text class="th" x="340" y="122" text-anchor="middle" dominant-baseline="central" fill="#9ef0e8">Milestone 1 &#10003;</text><text class="ts" x="340" y="141" text-anchor="middle" dominant-baseline="central" fill="#9ef0e8">Blank slate, buildable</text></g>
+      <g><rect x="240" y="175" width="200" height="60" rx="10" fill="none" stroke="#5b616b" stroke-width="1.5" stroke-dasharray="5 4"/><text class="th" x="340" y="197" text-anchor="middle" dominant-baseline="central" fill="#b7bcc5">Milestone 2+ (planned)</text><text class="ts" x="340" y="216" text-anchor="middle" dominant-baseline="central" fill="#8a8f98">Gale + Pufferfish patches</text></g>
+      <text x="340" y="308" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#7a8fd6">com.swag617.spaper</text>
+
+      <g><rect x="520" y="60" width="130" height="60" rx="8" fill="#1b1f28" stroke="#5b616b" stroke-width="1"/><text class="th" x="585" y="82" text-anchor="middle" dominant-baseline="central" fill="#e6e8ec">Local Maven repo</text><text class="ts" x="585" y="100" text-anchor="middle" dominant-baseline="central" fill="#b7bcc5">spaper-api / spaper-server</text></g>
+      <g><rect x="520" y="170" width="130" height="60" rx="8" fill="#1b1f28" stroke="#5b616b" stroke-width="1"/><text class="th" x="585" y="192" text-anchor="middle" dominant-baseline="central" fill="#e6e8ec">Server jar</text><text class="ts" x="585" y="210" text-anchor="middle" dominant-baseline="central" fill="#b7bcc5">createMojmapBundlerJar</text></g>
+
+      <line x1="182" y1="88" x2="216" y2="88" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="182" y1="198" x2="216" y2="198" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="462" y1="90" x2="516" y2="90" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="462" y1="200" x2="516" y2="200" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+    </svg>
+    <div class="diagram-caption">Paper's source, Purpur's tooling, none of Purpur's gameplay patches — a clean stack to build on.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-label"><span>What makes it different</span></div>
+    <div class="feature-grid">
+      <div class="panel feature">
+        <div class="feature-num">01</div>
+        <h3>Tooling without the baggage</h3>
+        <p>Purpur's Gradle patch-stack tooling is genuinely good — its scaffolding for applying, rebasing, and building a Paper-derived patch stack is what SPaper reuses. What got stripped out is every one of Purpur's own gameplay patches, so there's no upstream gameplay behavior to understand, fight, or accidentally inherit.</p>
+      </div>
+      <div class="panel feature">
+        <div class="feature-num">02</div>
+        <h3>Curated ports, not a wholesale merge</h3>
+        <p>Milestone 2+ hand-ports <em>specific</em> patches from <code>Gale</code> and <code>Pufferfish</code> rather than merging either project wholesale. Every behavior change that ends up in SPaper is one that was deliberately picked and understood first.</p>
+      </div>
+      <div class="panel feature">
+        <div class="feature-num">03</div>
+        <h3>Real Maven coordinates</h3>
+        <p><code>./gradlew publishToMavenLocal</code> installs <code>spaper-api</code> and <code>spaper-server</code> under the <code>com.swag617.spaper</code> group, so the rest of the plugin ecosystem can compile and test against SPaper directly, the same way it would against upstream Paper.</p>
+      </div>
+      <div class="panel feature">
+        <div class="feature-num">04</div>
+        <h3>A real server jar, not a library jar</h3>
+        <p>The default build output under <code>spaper-api/build/libs</code> and <code>spaper-server/build/libs</code> isn't directly runnable. A dedicated <code>./gradlew createMojmapBundlerJar</code> task produces the actual server-ready jar, mirroring Paper's own multi-artifact build split.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="roadmap" style="padding-top: 0;">
+    <div class="section-label"><span>Roadmap</span></div>
+    <div class="panel roadmap">
+      <div class="roadmap-item done">
+        <div class="roadmap-check">&#10003;</div>
+        <div class="roadmap-body">
+          <h3>Milestone 1 — Empty, buildable fork</h3>
+          <p>Forked, rebranded, and confirmed to build with no gameplay or behavior changes of its own — byte-for-byte equivalent to vanilla Paper. This is where the project stands today.</p>
+        </div>
+      </div>
+      <div class="roadmap-item planned">
+        <div class="roadmap-check">&middot;</div>
+        <div class="roadmap-body">
+          <h3>Milestone 2+ — Port selected Gale &amp; Pufferfish patches</h3>
+          <p>Hand-port specific performance patches one at a time, keeping behavior predictable and every change deliberate.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel quickstart">
+    <div class="quickstart-label">Quick start: build it yourself</div>
+    <pre><span class="c">git clone</span> https://github.com/swag617/SPaper.git <span class="c">&amp;&amp;</span> <span class="c">cd</span> SPaper
+<span class="p">./gradlew</span> applyAllPatches
+<span class="p">./gradlew</span> build</pre>
+    <p class="quickstart-note">Needs a <strong>real git clone</strong> — a downloaded zip won't build. A Java 21+ JDK is required; Gradle auto-provisions JDK 25 via toolchains if it isn't already installed. The first <code>applyAllPatches</code> run decompiles and remaps Minecraft, which takes a while.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">Built by <span>swag617</span> &nbsp;&middot;&nbsp; Java &amp; Paper API</div>
+  <div class="footer-links">
+    <a href="index.html">&larr; Back to Portfolio</a>
+    <a href="https://github.com/swag617/SPaper" target="_blank">Source on GitHub</a>
+  </div>
+</footer>
+
+<div id="page-transition"></div>
+<script>
+document.addEventListener('click', function (e) {
+  const btn = e.target.closest('.btn, .nav-gh');
+  if (!btn) return;
+  const rect = btn.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height) * 1.6;
+  const ripple = document.createElement('span');
+  ripple.className = 'btn-ripple';
+  ripple.style.width = ripple.style.height = size + 'px';
+  ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+  ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+  btn.style.position = btn.style.position || 'relative';
+  btn.style.overflow = 'hidden';
+  btn.appendChild(ripple);
+  ripple.addEventListener('animationend', () => ripple.remove(), { once: true });
+
+  const opensNewTab = btn.target === '_blank';
+  const href = btn.getAttribute('href');
+  if (!href || opensNewTab) return;
+  e.preventDefault();
+  document.getElementById('page-transition').classList.add('active');
+  setTimeout(() => { window.location.href = href; }, 320);
+});
+</script>
+
+</body>
+</html>
