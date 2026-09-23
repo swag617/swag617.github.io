@@ -165,6 +165,27 @@
   .quickstart-note { font-size: 12.5px; line-height: 1.6; color: var(--text-dim); margin-top: 14px; }
   .quickstart-note strong { color: var(--text); font-weight: 600; }
 
+  .compare-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+  .compare-col { padding: 22px; }
+  .compare-head { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 14px; }
+  .compare-col--spaper { border-color: rgba(118,75,162,0.5); }
+  .compare-col--spaper .compare-head { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .compare-col ul { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+  .compare-col li { font-size: 13px; line-height: 1.55; color: var(--text-dim); padding-left: 20px; position: relative; }
+  .compare-col li::before { content: '\2013'; position: absolute; left: 0; color: #555; }
+  .compare-col--spaper li::before { content: '\2713'; color: #2ec4b6; font-weight: 700; }
+  .compare-col--spaper li { color: var(--text); }
+
+  .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin-top: 28px; }
+  .stat { padding: 22px; text-align: center; }
+  .stat-num { font-family: var(--font-flare); font-size: 30px; font-weight: 700; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .stat-label { font-size: 12px; color: var(--text-dim); margin-top: 6px; }
+
+  .proof-panel { padding: 24px 28px; margin-top: 28px; }
+  .proof-label { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
+  .proof-panel p { font-size: 13.5px; line-height: 1.75; color: var(--text-dim); }
+  .proof-panel strong { color: var(--text); font-weight: 600; }
+
   .roadmap { display: flex; flex-direction: column; gap: 2px; }
   .roadmap-item { padding: 20px 24px; display: flex; align-items: flex-start; gap: 16px; }
   .roadmap-check {
@@ -202,6 +223,8 @@
   @media (max-width: 760px) {
     .wrap, nav, footer { padding-left: 20px; padding-right: 20px; }
     .feature-grid { grid-template-columns: 1fr; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .stat-row { grid-template-columns: 1fr; }
     .hero { padding: 56px 0 30px; }
   }
 </style>
@@ -264,6 +287,54 @@
       <line x1="462" y1="200" x2="516" y2="200" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
     </svg>
     <div class="diagram-caption">Paper's source, Purpur's tooling, none of Purpur's gameplay patches — a clean stack to build on.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-label"><span>Why SPaper</span></div>
+    <p style="font-size:14.5px;line-height:1.75;color:var(--text-dim);max-width:760px;margin-bottom:28px;">Vanilla Paper is deliberately conservative — it fixes bugs and exposes plugin APIs, but it doesn't touch vanilla behavior for performance. The forks that do (Purpur, Pufferfish, Airplane, and others) solve that by applying hundreds of patches at once, which means running production on someone else's bundled judgment calls about which vanilla behaviors are safe to change, with no way to take just the ones that matter. Those large patch stacks are also notoriously slow to catch up after a new Minecraft release — resolving hundreds of patches against a fresh vanilla source can take other forks weeks or months.</p>
+    <div class="compare-grid">
+      <div class="panel compare-col">
+        <div class="compare-head">Vanilla Paper</div>
+        <ul>
+          <li>Zero performance-motivated behavior changes</li>
+          <li>Rock solid, but leaves real, safe wins on the table</li>
+        </ul>
+      </div>
+      <div class="panel compare-col">
+        <div class="compare-head">A typical big fork</div>
+        <ul>
+          <li>Hundreds of patches applied wholesale</li>
+          <li>Every behavior change inherited at once — audited or not</li>
+          <li>Often weeks or months behind Paper after an MC update</li>
+        </ul>
+      </div>
+      <div class="panel compare-col compare-col--spaper">
+        <div class="compare-head">SPaper</div>
+        <ul>
+          <li>13 patches, each read against its real current diff before landing</li>
+          <li>Every round verified against a real 82-plugin production server, not a synthetic test setup</li>
+          <li>A small, deliberate stack — fast and low-risk to rebase onto a new Minecraft version</li>
+        </ul>
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="panel stat">
+        <div class="stat-num">13</div>
+        <div class="stat-label">Patches landed, each individually understood</div>
+      </div>
+      <div class="panel stat">
+        <div class="stat-num">82</div>
+        <div class="stat-label">Real production plugins verified against, every round</div>
+      </div>
+      <div class="panel stat">
+        <div class="stat-num">0</div>
+        <div class="stat-label">New exceptions across every verification pass</div>
+      </div>
+    </div>
+    <div class="panel proof-panel">
+      <div class="proof-label">Proof in the process</div>
+      <p>Discipline cuts both ways. Alongside the 13 patches that landed, several real candidates were read in full and rejected outright once they turned out to risk actual gameplay behavior instead of a pure performance win — a stuck-entity retry timer, a movement early-return with a physics-correctness edge case, a fire-resistance visual change. <strong>Compatibility gets the same scrutiny</strong>: SPaper's own rebranded version string silently broke ItemsAdder's version-sniffing logic before it was caught and fixed — the kind of subtle plugin-ecosystem bug that's easy to miss on an empty test server and hard to miss when every change is verified against 82 real production plugins instead.</p>
+    </div>
   </div>
 
   <div class="section">
