@@ -242,12 +242,12 @@
 <div class="wrap">
   <div class="hero">
     <div class="hero-eyebrow">Server Software &middot; Paper Fork</div>
-    <h1 class="hero-title">A blank slate, <span class="accent">built for the patches that matter.</span></h1>
-    <p class="hero-sub">SPaper is a private fork of <strong>Paper</strong>, scaffolded from <strong>PurpurMC/Purpur</strong>'s build tooling and stripped back to nothing. Milestone 1 kept it byte-for-byte equivalent to vanilla Paper; Milestone 2 has since hand-ported <strong>13 performance patches</strong> from <strong>Gale</strong> and <strong>Pufferfish</strong>, one at a time, each verified against a real 82-plugin production set — now frozen as a stable 1.21.11 baseline while a rebase to <strong>Minecraft 26.1</strong> is planned next.</p>
+    <h1 class="hero-title">Every patch earns its place. <span class="accent">Every tick feels it.</span></h1>
+    <p class="hero-sub">SPaper starts from <strong>Paper</strong> and adds exactly the <strong>Gale</strong> and <strong>Pufferfish</strong> performance patches that hold up under scrutiny — nothing more. Every one is read against its real current diff, verified against a live <strong>82-plugin production server</strong>, and rejected outright if it risks real gameplay behavior instead of a pure performance win. The result is a fork you can actually reason about: smaller, faster to keep current on new Minecraft versions, and never running a line of code nobody on the team has actually read.</p>
     <div class="hero-tags">
-      <span class="tag">Paper Fork</span>
-      <span class="tag">13 Patches Landed</span>
-      <span class="tag">paperweight-patcher</span>
+      <span class="tag">13 Patches, Fully Audited</span>
+      <span class="tag">82-Plugin Verified</span>
+      <span class="tag">No Unread Code</span>
       <span class="tag">Java 21+ &middot; JDK 25 toolchain</span>
     </div>
     <div class="hero-actions">
@@ -255,9 +255,9 @@
         <svg class="icon" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
         Source on GitHub
       </a>
-      <a href="#roadmap" class="btn btn-ghost">
+      <a href="#why" class="btn btn-ghost">
         <svg class="icon" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-        View Roadmap
+        See Why It's Different
       </a>
     </div>
   </div>
@@ -289,7 +289,7 @@
     <div class="diagram-caption">Paper's source, Purpur's tooling, none of Purpur's gameplay patches — a clean stack to build on.</div>
   </div>
 
-  <div class="section">
+  <div class="section" id="why">
     <div class="section-label"><span>Why SPaper</span></div>
     <p style="font-size:14.5px;line-height:1.75;color:var(--text-dim);max-width:760px;margin-bottom:28px;">Vanilla Paper is deliberately conservative — it fixes bugs and exposes plugin APIs, but it doesn't touch vanilla behavior for performance. The forks that do (Purpur, Pufferfish, Airplane, and others) solve that by applying hundreds of patches at once, which means running production on someone else's bundled judgment calls about which vanilla behaviors are safe to change, with no way to take just the ones that matter. Those large patch stacks are also notoriously slow to catch up after a new Minecraft release — resolving hundreds of patches against a fresh vanilla source can take other forks weeks or months.</p>
     <div class="compare-grid">
