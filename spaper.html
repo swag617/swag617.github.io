@@ -186,6 +186,19 @@
   .proof-panel p { font-size: 13.5px; line-height: 1.75; color: var(--text-dim); }
   .proof-panel strong { color: var(--text); font-weight: 600; }
 
+  .bench-panel { padding: 26px 28px; margin-top: 28px; }
+  .bench-headline { font-size: 21px; font-weight: 700; color: #fff; margin: 6px 0 16px; }
+  .bench-num { font-family: var(--font-flare); font-size: 30px; font-weight: 700; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-right: 6px; }
+  .bench-panel > p { font-size: 13.5px; line-height: 1.7; color: var(--text-dim); margin-bottom: 18px; }
+  .bench-table { display: flex; flex-direction: column; gap: 1px; background: var(--line); border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
+  .bench-row { display: grid; grid-template-columns: 1.4fr 1fr 1fr; background: var(--slot); padding: 11px 16px; font-size: 13px; gap: 8px; }
+  .bench-row span:first-child { color: var(--text-dim); }
+  .bench-row span:nth-child(2) { color: var(--text-dim); font-family: var(--mono); }
+  .bench-row .bench-win { color: #2ec4b6; font-family: var(--mono); font-weight: 700; }
+  .bench-row--head { background: transparent; padding-bottom: 2px; }
+  .bench-row--head span { font-family: var(--mono) !important; font-size: 10.5px !important; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim) !important; font-weight: 700 !important; }
+  .bench-note { font-size: 12px; line-height: 1.65; color: var(--text-dim); font-style: italic; opacity: 0.85; }
+
   .roadmap { display: flex; flex-direction: column; gap: 2px; }
   .roadmap-item { padding: 20px 24px; display: flex; align-items: flex-start; gap: 16px; }
   .roadmap-check {
@@ -245,10 +258,10 @@
     <h1 class="hero-title">Every patch earns its place. <span class="accent">Every tick feels it.</span></h1>
     <p class="hero-sub">SPaper starts from <strong>Paper</strong> and adds exactly the <strong>Gale</strong> and <strong>Pufferfish</strong> performance patches that hold up under scrutiny — nothing more. Every one is read against its real current diff, verified against a live <strong>82-plugin production server</strong>, and rejected outright if it risks real gameplay behavior instead of a pure performance win. The result is a fork you can actually reason about: smaller, faster to keep current on new Minecraft versions, and never running a line of code nobody on the team has actually read.</p>
     <div class="hero-tags">
+      <span class="tag">37.7% Lower Tick Time, Benchmarked</span>
       <span class="tag">13 Patches, Fully Audited</span>
       <span class="tag">82-Plugin Verified</span>
       <span class="tag">No Unread Code</span>
-      <span class="tag">Java 21+ &middot; JDK 25 toolchain</span>
     </div>
     <div class="hero-actions">
       <a href="https://github.com/swag617/SPaper" target="_blank" class="btn btn-primary">
@@ -316,6 +329,18 @@
           <li>A small, deliberate stack — fast and low-risk to rebase onto a new Minecraft version</li>
         </ul>
       </div>
+    </div>
+    <div class="panel bench-panel">
+      <div class="proof-label">Benchmarked, not just argued</div>
+      <div class="bench-headline"><span class="bench-num">37.7%</span>lower average tick time under a calibrated heavy-mob stress test</div>
+      <p>Same world, the same real 82-plugin set, the same hardware — only the jar changed. A mixed 1,800-mob population (zombies, non-farmer villagers, skeletons, piglins — chosen to exercise the specific patches that touch each mob type) was calibrated to push vanilla Paper to roughly 30ms/tick, then held at an identical fixed population across 3 alternating trials per jar, sampling every 10 seconds for 5 minutes each trial.</p>
+      <div class="bench-table">
+        <div class="bench-row bench-row--head"><span>Metric</span><span>Vanilla Paper</span><span>SPaper</span></div>
+        <div class="bench-row"><span>Avg tick time (MSPT)</span><span>29.87ms</span><span class="bench-win">18.60ms</span></div>
+        <div class="bench-row"><span>Avg heap used</span><span>1767.8 MB</span><span class="bench-win">1644.5 MB</span></div>
+        <div class="bench-row"><span>Young GC / 5min trial</span><span>148&ndash;234 (erratic)</span><span class="bench-win">189&ndash;192 (steady)</span></div>
+      </div>
+      <p class="bench-note">Honest caveat: TPS itself didn't move (both jars held ~19.95) — at this specific load SPaper still has plenty of tick budget left, so this measures "same load, how much cheaper," not "how much more load SPaper can take before TPS drops" (a fair follow-up question, just a different test). The mob population was locked in place to isolate AI/tick cost from combat-driven population decay. Single-machine test; full methodology and raw per-trial numbers available on request.</p>
     </div>
     <div class="stat-row">
       <div class="panel stat">
