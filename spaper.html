@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SPaper · swag617</title>
 <meta name="description" content="SPaper is a private Paper fork scaffolded from Purpur's build tooling. 13 hand-ported performance patches from Gale and Pufferfish have landed and are frozen as a stable 1.21.11 baseline, with a Minecraft 26.1 rebase planned next.">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg:          #1a1a1a;
@@ -18,6 +18,7 @@
     --text-dim:    #999;
     --lore:        #9b8ec4;
     --font-flare:  'Silkscreen', 'JetBrains Mono', monospace;
+    --font-num:    'Space Grotesk', 'Inter', sans-serif;
     --font:        'Inter', sans-serif;
     --mono:        'JetBrains Mono', monospace;
   }
@@ -178,7 +179,7 @@
 
   .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin-top: 28px; }
   .stat { padding: 22px; text-align: center; }
-  .stat-num { font-family: var(--font-flare); font-size: 30px; font-weight: 700; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .stat-num { font-family: var(--font-num); font-size: 32px; font-weight: 700; letter-spacing: -0.01em; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .stat-label { font-size: 12px; color: var(--text-dim); margin-top: 6px; }
 
   .proof-panel { padding: 24px 28px; margin-top: 28px; }
@@ -188,7 +189,7 @@
 
   .bench-panel { padding: 26px 28px; margin-top: 28px; }
   .bench-headline { font-size: 21px; font-weight: 700; color: #fff; margin: 6px 0 16px; }
-  .bench-num { font-family: var(--font-flare); font-size: 30px; font-weight: 700; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-right: 6px; }
+  .bench-num { font-family: var(--font-num); font-size: 32px; font-weight: 700; letter-spacing: -0.01em; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-right: 6px; }
   .bench-panel > p { font-size: 13.5px; line-height: 1.7; color: var(--text-dim); margin-bottom: 18px; }
   .bench-table { display: flex; flex-direction: column; gap: 1px; background: var(--line); border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
   .bench-row { display: grid; grid-template-columns: 1.4fr 1fr 1fr; background: var(--slot); padding: 11px 16px; font-size: 13px; gap: 8px; }
