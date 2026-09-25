@@ -258,10 +258,10 @@
     <h1 class="hero-title">Every patch earns its place. <span class="accent">Every tick feels it.</span></h1>
     <p class="hero-sub">SPaper starts from <strong>Paper</strong> and adds exactly the <strong>Gale</strong> and <strong>Pufferfish</strong> performance patches that hold up under scrutiny — nothing more. Every one is read against its real current diff, verified against a live <strong>82-plugin production server</strong>, and rejected outright if it risks real gameplay behavior instead of a pure performance win. The result is a fork you can actually reason about: smaller, faster to keep current on new Minecraft versions, and never running a line of code nobody on the team has actually read.</p>
     <div class="hero-tags">
-      <span class="tag">37.7% Lower Tick Time, Benchmarked</span>
+      <span class="tag">70% More Capacity Than Vanilla</span>
+      <span class="tag">37.7% Lower Tick Time</span>
       <span class="tag">13 Patches, Fully Audited</span>
       <span class="tag">82-Plugin Verified</span>
-      <span class="tag">No Unread Code</span>
     </div>
     <div class="hero-actions">
       <a href="https://github.com/swag617/SPaper" target="_blank" class="btn btn-primary">
@@ -341,6 +341,18 @@
         <div class="bench-row"><span>Young GC / 5min trial</span><span>148&ndash;234 (erratic)</span><span class="bench-win">189&ndash;192 (steady)</span></div>
       </div>
       <p class="bench-note">Honest caveat: TPS itself didn't move (both jars held ~19.95) — at this specific load SPaper still has plenty of tick budget left, so this measures "same load, how much cheaper," not "how much more load SPaper can take before TPS drops" (a fair follow-up question, just a different test). The mob population was locked in place to isolate AI/tick cost from combat-driven population decay. Single-machine test; full methodology and raw per-trial numbers available on request.</p>
+    </div>
+    <div class="panel bench-panel">
+      <div class="proof-label">The follow-up question, answered</div>
+      <div class="bench-headline"><span class="bench-num">70.3%</span>more mob capacity before TPS actually drops</div>
+      <p>Same setup, a different question: instead of holding load constant, each jar's mob population was independently calibrated &mdash; coarse jumps, then fine steps &mdash; to find the exact count where real <code>/tps</code> crosses below 19.5, confirmed with 3 fresh-template trials per jar (36 samples each, 10s intervals). Two real measurement bugs (an unreliable fast-search proxy, and boot-noise contaminating an early reading) were caught and fixed before they could produce false numbers &mdash; neither bad result is in the table below.</p>
+      <div class="bench-table">
+        <div class="bench-row bench-row--head"><span>Metric</span><span>Vanilla Paper</span><span>SPaper</span></div>
+        <div class="bench-row"><span>Threshold mob count</span><span>3,875</span><span class="bench-win">6,600</span></div>
+        <div class="bench-row"><span>Mean TPS (36 samples)</span><span>18.217</span><span class="bench-win">19.144</span></div>
+        <div class="bench-row"><span>Mean tick time (MSPT)</span><span>54.9ms</span><span class="bench-win">52.2ms</span></div>
+      </div>
+      <p class="bench-note">All 6 confirming trials were tightly self-consistent (vanilla: 18.0&ndash;18.4 TPS across 36 samples; SPaper: 18.9&ndash;19.4 across 36 samples) &mdash; not a single lucky run. Boot times were near-identical (72&ndash;73s both jars), so this is runtime capacity, not a startup artifact. Scope, stated plainly: this compares SPaper against vanilla Paper only &mdash; it says nothing about Purpur, Pufferfish, Airplane, or any other fork, and isn't an industry-wide claim.</p>
     </div>
     <div class="stat-row">
       <div class="panel stat">
