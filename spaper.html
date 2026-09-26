@@ -432,8 +432,8 @@
     <div class="quickstart-label">Quick start: build it yourself</div>
     <pre><span class="c">git clone</span> https://github.com/swag617/SPaper.git <span class="c">&amp;&amp;</span> <span class="c">cd</span> SPaper
 <span class="p">./gradlew</span> applyAllPatches
-<span class="p">./gradlew</span> build</pre>
-    <p class="quickstart-note">Needs a <strong>real git clone</strong> — a downloaded zip won't build. A Java 21+ JDK is required; Gradle auto-provisions JDK 25 via toolchains if it isn't already installed. The first <code>applyAllPatches</code> run decompiles and remaps Minecraft, which takes a while.</p>
+<span class="p">./gradlew</span> createMojmapBundlerJar</pre>
+    <p class="quickstart-note">Needs a <strong>real git clone</strong> — a downloaded zip won't build. A Java 21+ JDK is required; Gradle auto-provisions JDK 25 via toolchains if it isn't already installed. The first <code>applyAllPatches</code> run decompiles and remaps Minecraft, which takes a while &mdash; plain <code>./gradlew build</code> compiles but does <strong>not</strong> produce a runnable server jar, so <code>createMojmapBundlerJar</code> is the step that actually does. See the <a href="https://github.com/swag617/SPaper#readme" target="_blank">README</a> for full setup, first-boot expectations, and troubleshooting.</p>
   </div>
 </div>
 
